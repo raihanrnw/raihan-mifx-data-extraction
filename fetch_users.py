@@ -13,14 +13,18 @@ response = requests.get("https://reqres.in/api/users?page=2", headers=headers)
 if response.status_code == 200:
     users = response.json()["data"]
 
+    #  created file as users.csv
     with open("users.csv", "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=["first_name", "last_name", "email"], extrasaction='ignore')
 
-        # This makes the CSV headers look exactly like your assignment table
+        # this to create csv column and the values
         writer.writerow({"first_name": "First Name", "last_name": "Last Name", "email": "Email"})
 
+        # write into users.csv file
         writer.writerows(users)
 
+        # logging if write is successful
     print("Convert Done! File csv generated successfully, please check the users.csv on root directory")
 else:
+        # logging else status code get api it not 200
     print(f"Failed to fetch data, Status code: {response.status_code}")
